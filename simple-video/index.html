@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  </head>
+  <body bgcolor="#ff9900">
+    <br><br><br>
+    <div style="position:relative;left:100px">
+      <video id="video" width="480" src="https://webrtc.github.io/samples/src/video/chrome.mp4" controls>
+      </video>
+      <br>
+      <button id="playpausebutton">Play</button>
+    </div>
+    <script>
+      var playing = false;
+      $("#playpausebutton").click(function() {
+          if (!playing) {
+              $("#video")[0].play();
+              playing = true;
+          } else {
+              $("#video")[0].pause();
+              playing = false;
+          }
+      });
+    </script>
+  </body>
+</html>
