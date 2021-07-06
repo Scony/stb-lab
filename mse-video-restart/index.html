@@ -1,0 +1,86 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  </head>
+  <body bgcolor="#ff9900">
+    <br><br><br>
+    <div style="position:relative;left:100px">
+      <video id="video" width="480" controls></video>
+      <br>
+      <button id="mediaSrc">(1) Setup MediaSource</button>
+      <button id="srcBuffer">(2) Add & fill SourceBuffer</button>
+      <button id="play">(3) Play</button>
+      <button id="seek">(4) Seek near end</button>
+      <button id="replay">(5) Replay</button>
+    </div>
+    <script>
+      var video = $("#video")[0];
+      var assetURL = 'https://nickdesaulniers.github.io/netfix/demo/frag_bunny.mp4'
+      var mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
+      var mediaSource = null;
+
+      $("#mediaSrc").click(function() {
+          setupMediaSource();
+      });
+      $("#srcBuffer").click(function() {
+          setupAndFillSourceBuffer();
+      });
+      $("#play").click(function() {
+          startPlaying();
+      });
+      $("#seek").click(function() {
+          seekNearEnd();
+      });
+      $("#replay").click(function() {
+          replay();
+      });
+
+      function setupMediaSource() {
+          if ('MediaSource' in window && MediaSource.isTypeSupported(mimeCodec)) {
+              mediaSource = new MediaSource;
+              console.log(mediaSource.readyState, '(should be "closed")');
+              video.src = URL.createObjectURL(mediaSource);
+          } else {
+              console.error('Unsupported MIME type or codec: ', mimeCodec);
+          }
+      }
+
+      function setupAndFillSourceBuffer() {
+          console.log(mediaSource.readyState, '(should be "open")');
+          var sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
+          fetchAB(assetURL, function (buf) {
+              console.log(buf);
+              sourceBuffer.appendBuffer(buf);
+          });
+      }
+
+      function startPlaying() {
+          video.addEventListener('waiting', function(_) {
+              mediaSource.endOfStream();
+              console.log('marked EOS');
+          }, {once:true});
+          video.play();
+      }
+
+      function seekNearEnd() {
+          video.currentTime = 55.0;
+      }
+
+      function replay() {
+          video.play();
+      }
+
+      function fetchAB(url, cb) {
+          console.log(url);
+          var xhr = new XMLHttpRequest;
+          xhr.open('get', url);
+          xhr.responseType = 'arraybuffer';
+          xhr.onload = function () {
+              cb(xhr.response);
+          };
+          xhr.send();
+      };
+    </script>
+  </body>
+</html>
