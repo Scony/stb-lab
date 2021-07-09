@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script>
+      function findGetParameter(parameterName) {
+          var result = null,
+              tmp = [];
+          location.search
+              .substr(1)
+              .split("&")
+              .forEach(function (item) {
+                  tmp = item.split("=");
+                  if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+              });
+          return result;
+      }
+      function foo() {
+          var drawsPerFrame = findGetParameter("drawsPerFrame");
+          drawsPerFrame = drawsPerFrame == null ? 100 : drawsPerFrame;
+          var smoothingEnabled = findGetParameter("smoothingEnabled");
+          var smoothingQuality = findGetParameter("smoothingQuality");
+          var ctx = document.getElementById("canv").getContext("2d");
+          const image = document.getElementById('source');
+          if (smoothingEnabled != null) {
+              ctx.imageSmoothingEnabled = true;
+              // console.log("ctx.imageSmoothingEnabled = true;");
+          }
+          if (smoothingQuality != null) {
+              ctx.imageSmoothingQuality = smoothingQuality;
+              // console.log("ctx.imageSmoothingQuality = " + smoothingQuality);
+          }
+          ctx.moveTo(0, 0);
+          $("div").html(parseInt($("div").html())+1);
+          for(i = 0; i < drawsPerFrame; i++) {
+              ctx.save()
+              var tx = Math.floor(Math.random() * 17);
+              var ty = Math.floor(Math.random() * 17);
+              var ang = Math.random() * 6;
+              ctx.scale(2.02342, 2.123423);
+              ctx.translate(tx, ty);
+              ctx.rotate(ang);
+              ctx.drawImage(image, Math.floor(Math.random() * 641), Math.floor(Math.random() * 641));
+              ctx.restore()
+          }
+          ctx.stroke();
+          window.requestAnimationFrame(foo);
+      }
+      function start() {
+          $("p").html('timer started');
+          window.setTimeout(function() {
+              $("p").html('timer fired !!!!');
+          }, 5000);
+          window.requestAnimationFrame(foo);
+      }
+      $(document).ready(function() {
+          window.setTimeout(start, 5000);
+          var ctx = document.getElementById("canv").getContext("2d");
+          ctx.moveTo(0, 0);
+          ctx.lineTo(200, 100);
+          ctx.lineTo(100, 200);
+          ctx.stroke();
+      });
+    </script>
+  </head>
+  <body bgcolor="#ff9900">
+    <br><br><br>
+    <p style="position:relative;left:100px">timer not started</p><br>
+    <div style="position:relative;left:100px">0</div>
+    <canvas id="canv" style="position:relative;left:100px;border:1px solid #d3d3d3;" width="640" height="640" bgcolor="#ffffff">Error</canvas>
+    <img id="source"
+       src="https://mdn.mozillademos.org/files/5397/rhino.jpg"
+       width="300" height="227"  style="position:relative;left:100px;">
+  </body>
+</html>
