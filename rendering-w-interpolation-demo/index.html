@@ -21,14 +21,6 @@
           var smoothingQuality = findGetParameter("smoothingQuality");
           var ctx = document.getElementById("canv").getContext("2d");
           const image = document.getElementById('source');
-          if (smoothingEnabled != null) {
-              ctx.imageSmoothingEnabled = true;
-              // console.log("ctx.imageSmoothingEnabled = true;");
-          }
-          if (smoothingQuality != null) {
-              ctx.imageSmoothingQuality = smoothingQuality;
-              // console.log("ctx.imageSmoothingQuality = " + smoothingQuality);
-          }
           ctx.moveTo(0, 0);
           $("div").html(parseInt($("div").html())+1);
           for(i = 0; i < drawsPerFrame; i++) {
@@ -36,6 +28,14 @@
               var tx = Math.floor(Math.random() * 17);
               var ty = Math.floor(Math.random() * 17);
               var ang = Math.random() * 6;
+              if (smoothingEnabled != null) {
+                  ctx.imageSmoothingEnabled = true;
+                  // console.log("ctx.imageSmoothingEnabled = true;");
+              }
+              if (smoothingQuality != null) {
+                  ctx.imageSmoothingQuality = smoothingQuality;
+                  // console.log("ctx.imageSmoothingQuality = " + smoothingQuality);
+              }
               ctx.translate(tx, ty);
               ctx.rotate(ang);
               ctx.drawImage(image, Math.floor(Math.random() * 641), Math.floor(Math.random() * 641), 364, 288);
