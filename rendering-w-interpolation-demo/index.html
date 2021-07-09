@@ -38,7 +38,7 @@
               var ang = Math.random() * 6;
               ctx.translate(tx, ty);
               ctx.rotate(ang);
-              ctx.drawImage(image, Math.floor(Math.random() * 641), Math.floor(Math.random() * 641), 300*2+1, 227*2+1);
+              ctx.drawImage(image, Math.floor(Math.random() * 641), Math.floor(Math.random() * 641), 364, 288);
               ctx.restore()
           }
           ctx.stroke();
@@ -66,8 +66,11 @@
     <p style="position:relative;left:100px">timer not started</p><br>
     <div style="position:relative;left:100px">0</div>
     <canvas id="canv" style="position:relative;left:100px;border:1px solid #d3d3d3;" width="640" height="640" bgcolor="#ffffff">Error</canvas>
+    <!-- <img id="source" -->
+    <!--    src="https://mdn.mozillademos.org/files/5397/rhino.jpg" -->
+    <!--    width="300" height="227"  style="position:relative;left:100px;"> -->
     <img id="source"
-       src="https://mdn.mozillademos.org/files/5397/rhino.jpg"
-       width="300" height="227"  style="position:relative;left:100px;">
+         src="https://sky.play.works/service/apps/crossy_road/sprites/hipster-whale.png"
+         width="750" height="593" style="position:relative;left:100px;">
   </body>
 </html>
