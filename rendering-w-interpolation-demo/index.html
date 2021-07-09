@@ -36,10 +36,9 @@
               var tx = Math.floor(Math.random() * 17);
               var ty = Math.floor(Math.random() * 17);
               var ang = Math.random() * 6;
-              ctx.scale(2.02342, 2.123423);
               ctx.translate(tx, ty);
               ctx.rotate(ang);
-              ctx.drawImage(image, Math.floor(Math.random() * 641), Math.floor(Math.random() * 641));
+              ctx.drawImage(image, Math.floor(Math.random() * 641), Math.floor(Math.random() * 641), 300*2+1, 227*2+1);
               ctx.restore()
           }
           ctx.stroke();
