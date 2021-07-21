@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  </head>
+  <body>
+    <br><br><br>
+    <p style="position:relative;left:100px">CSS glitch</p><br>
+    <div style="position:relative;left:100px;">
+      <button id="fl">Focus left</button>
+      <button id="fr">Focus right</button>
+      <button id="sl">Select left</button>
+      <button id="sr">Select right</button>
+    </div>
+    <div class="player" style="position:relative;left:100px;">
+      <div class="playerscene">
+        <div class="popuppane">
+          <div class="settingscontainer">
+            <div class="settingsrow">
+              <div class="options">
+                <div id="dl" class="option selected"><span>Aus</span></div>
+                <div id="dr" class="option"><span class="">An</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $("#fl").click(function() {
+          $("#dl").addClass("focus");
+          $("#dr").removeClass("focus");
+      });
+      $("#fr").click(function() {
+          $("#dr").addClass("focus");
+          $("#dl").removeClass("focus");
+      });
+      $("#sl").click(function() {
+          $("#dl").addClass("selected");
+          $("#dr").removeClass("selected");
+      });
+      $("#sr").click(function() {
+          $("#dr").addClass("selected");
+          $("#dl").removeClass("selected");
+      });
+    </script>
+  </body>
+</html>

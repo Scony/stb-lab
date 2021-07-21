@@ -1,0 +1,729 @@
+body { margin: 0px; background: transparent; width: 1280px; height: 720px; }
+
+td { vertical-align: top; }
+
+div { position: absolute; font-family: Thesis, Tiresias, sans-serif; margin: 0px; padding: 0px; }
+
+#videocontainer div { position: static; }
+
+img { border: 0px; margin: 0px; padding: 0px; }
+
+p, h1, h2, h3 { margin: 0; padding: 0; }
+
+#appscreen, #player, #videocontainer { left: 0px; top: 0px; width: 1280px; height: 720px; overflow: hidden; }
+
+#appscreen { background-color: #000e29; }
+
+div.colbutton { height: 24px; padding-top: 1px; padding-left: 39px; font-size: 18px; line-height: 22px; color: #ffffff; }
+
+div.colbuttonr, div.colbuttong, div.colbuttony, div.colbuttonb, div.colbutton0 { left: 0px; top: 0px; width: 22px; height: 20px; padding-top: 2px; color: #000000; font-size: 16px; line-height: 19px; font-weight: bold; text-align: center; border-radius: 11px; border-style: solid; border-width: 1px; border-color: #000e29; }
+
+div.colbuttonr { background-color: #d70000; }
+
+div.colbuttong { background-color: #009215; }
+
+div.colbuttony { background-color: #e3c100; }
+
+div.colbuttonb { background-color: #3a96dd; }
+
+div.colbutton0 { background-color: #f3f3f3; }
+
+div.colbarfooter { left: 0px; width: 1280px; height: 90px; border-style: solid; border-width: 1px 0px 0px 0px; border-color: #000e29; }
+
+div.loading { left: 640px; top: 360px; width: 100px; height: 100px; margin-left: -50px; margin-top: -50px; display: none; }
+
+div.loading > div.circle { height: 100px; width: 100px; border-radius: 50px; background-color: #2d91ff; }
+
+div.loading > div.alttxt { left: 10px; top: 37px; width: 90px; font-size: 20px; line-height: 24px; color: #ffffff; text-align: center; }
+
+div.networkstatus { left: 210px; top: 304px; width: 780px; padding: 40px; font-size: 28px; line-height: 35px; text-align: center; color: #ffffff; background-color: #2d91ff; z-index: 100; }
+
+div.bullets { height: 4px; }
+
+div.bullet { top: 0px; width: 26px; height: 4px; background-color: #ffffff; }
+
+div.bullet.nosel { opacity: 0.2; }
+
+div.lgicon { width: 44px; height: 44px; background-image: url("icons.11e5c92a.png"); }
+
+div.lgicon.home { background-position: 0px -45px; }
+
+div.lgicon.time { background-position: 0px -90px; }
+
+div.lgicon.atoz { background-position: 0px -135px; }
+
+div.lgicon.live { background-position: 0px -180px; }
+
+div.lgicon.user { background-position: 0px -225px; }
+
+div.lgicon.disc { background-position: 0px -270px; }
+
+div.lgicon.chnl { background-position: 0px -315px; }
+
+div.lgicon.subr { background-position: 0px -360px; }
+
+div.lgicon.chck { background-position: 0px -405px; }
+
+div.lgicon.srch { background-position: 0px -450px; }
+
+div.lgicon.keyb { background-position: -100px -45px; }
+
+div.lgicon.bksp { background-position: -100px -90px; }
+
+div.sel div.lgicon.home { background-position: -45px -45px; }
+
+div.sel div.lgicon.time { background-position: -45px -90px; }
+
+div.sel div.lgicon.atoz { background-position: -45px -135px; }
+
+div.sel div.lgicon.live { background-position: -45px -180px; }
+
+div.sel div.lgicon.user { background-position: -45px -225px; }
+
+div.sel div.lgicon.disc { background-position: -45px -270px; }
+
+div.sel div.lgicon.chnl { background-position: -45px -315px; }
+
+div.sel div.lgicon.subr { background-position: -45px -360px; }
+
+div.sel div.lgicon.chck { background-position: -45px -405px; }
+
+div.sel div.lgicon.srch { background-position: -45px -450px; }
+
+div.smicon { width: 25px; height: 25px; background-image: url("icons.11e5c92a.png"); }
+
+div.smicon.goleft { background-position: 0px 0px; }
+
+div.smicon.close { background-position: -30px 0px; }
+
+div.smicon.search { background-position: -100px -150px; }
+
+div.rbuttons { left: 23px; height: 50px; }
+
+span.rbutton { padding: 19px 30px 18px 30px; margin: 0px 10px 0px 10px; font-size: 20px; line-height: 25px; color: #ffffff; border-style: solid; border-width: 2px; border-radius: 60px; border-color: #ffffff; }
+
+span.rbutton.small { padding: 6px 15px 6px 20px; margin: 0px 5px 0px 5px; border-radius: 36px; }
+
+span.rbutton.focus { background-color: #2d91ff; border-color: #2d91ff; }
+
+span.rbutton span.icon { padding-right: 14px; background-image: url("icons.11e5c92a.png"); }
+
+span.rbutton span.icon.filter { background-position: -100px -180px; }
+
+span.rbutton span.icon.close { margin-left: 5px; background-position: -100px -210px; }
+
+span.rbutton span.icon.play { background-position: -60px 0px; }
+
+div.popupwin { left: 320px; top: 160px; width: 600px; padding: 50px 60px 46px 60px; font-size: 24px; line-height: 30px; color: #ffffff; background-color: #1c2841; display: none; }
+
+div.popupwin p.title { font-size: 30px; line-height: 37px; font-weight: bold; margin-bottom: 10px; }
+
+div.popupwin p.options { clear: both; padding-top: 30px; line-height: 40px; text-align: right; }
+
+div.popupwin p.options span { padding: 14px 20px 13px 20px; }
+
+div.popupwin p.options span.focus { background-color: #2d91ff; }
+
+div.popupwin div.rimg.maus { position: relative; float: right; margin-left: 20px; width: 100px; height: 189px; background-image: url(maus.2bdc4bf4.png); background-repeat: no-repeat; }
+
+div.scene { left: 0px; top: 0px; width: 1280px; height: 720px; overflow: hidden; }
+
+div.scenecontainer { left: 0px; top: 0px; width: 1280px; height: 1px; }
+
+div.itemlist { left: 0px; width: 1280px; }
+
+div.itemlist div.decoration { left: 114px; top: 0px; width: 1166px; height: 510px; overflow: hidden; }
+
+div.itemlist div.decoration img { position: absolute; left: 0px; top: 0px; width: 1166px; height: 510px; }
+
+div.itemlist div.decoration div.bgshade1 { left: 0px; top: 0px; width: 810px; height: 510px; background-image: url(hshade.54e3d23a.png); }
+
+div.itemlist div.decoration div.bgshade2 { left: 0px; top: 371px; width: 1280px; height: 140px; background-image: url(vshade.f91a6a11.png); background-position: 0px -345px; }
+
+div.itemlist div.decoration div.text { left: 33px; width: 630px; font-size: 19px; line-height: 24px; color: #ffffff; }
+
+div.itemlist div.decoration div.text p.title { font-size: 31px; line-height: 36px; margin-bottom: 6px; font-weight: bold; }
+
+div.itemlist div.decoration div.text p.titlelg { font-size: 38px; line-height: 45px; margin-bottom: 10px; font-weight: bold; }
+
+div.itemlist div.decoration div.text p.sub { font-size: 18px; line-height: 20px; opacity: 0.8; }
+
+div.itemlist div.coverbanditem.stage div.decoration div.text { width: 550px; }
+
+div.coverbanditem { overflow: hidden; top: 0px; background-color: #000e29; }
+
+div.coverbanditem.focus { margin-top: -13px; margin-left: -29px; background-color: #1c2841; border-style: solid; border-width: 3px; border-color: #2d91ff; }
+
+div.coverbanditem.focus div.imgcntr div.topshade { display: block; }
+
+div.coverbanditem.focus div.imgcntr .labels span.label span.playicon { display: inline-block; }
+
+div.coverbanditem.focus div.title.focustitle { display: block; }
+
+div.coverbanditem.focus div.title.nofocustitle { display: none; }
+
+div.coverbanditem div.imgcntr { left: 0px; top: 0px; width: 100%; height: 100%; overflow: hidden; }
+
+div.coverbanditem div.imgcntr img.cover { position: absolute; left: 0px; top: 0px; width: 100%; height: auto; }
+
+div.coverbanditem div.imgcntr div.titleshade { left: 0px; bottom: 0px; width: 100%; height: 172px; opacity: 0.7; background-image: url(vshade.f91a6a11.png); background-position: 0px -100px; }
+
+div.coverbanditem div.imgcntr div.topshade { display: none; left: 0px; top: 0px; width: 100%; height: 42px; background-image: url(vshade.f91a6a11.png); background-position: 0px -47px; }
+
+div.coverbanditem div.imgcntr div.isplaying { right: 7px; top: 7px; width: 16px; height: 16px; background-image: url("icons.11e5c92a.png"); background-position: -100px -250px; }
+
+div.coverbanditem div.imgcntr .labels { top: 6px; font-size: 15px; line-height: 18px; margin-bottom: 20px; }
+
+div.coverbanditem div.imgcntr .labels.left { left: 3px; }
+
+div.coverbanditem div.imgcntr .labels.right { right: 0px; text-align: right; }
+
+div.coverbanditem div.imgcntr .labels span.label { padding: 3px 6px; margin-right: 3px; color: #ffffff; }
+
+div.coverbanditem div.imgcntr .labels span.label.withbg { color: #ffffff; background-color: #2d91ff; }
+
+div.coverbanditem div.imgcntr .labels span.label.live { color: #ffffff; background-color: #fd4f5c; }
+
+div.coverbanditem div.imgcntr .labels span.label span.playicon { display: none; padding-right: 17px; padding-bottom: 2px; background-image: url("icons.11e5c92a.png"); background-position: -90px 0px; }
+
+div.coverbanditem div.imgcntr div.watchprog { left: 0px; right: 0px; bottom: 9px; width: auto; height: 3px; margin-left: 10px; margin-right: 10px; }
+
+div.coverbanditem div.imgcntr div.watchprog div.bg { left: 0px; top: 0px; width: 100%; height: 3px; background-color: #ffffff; opacity: 0.4; }
+
+div.coverbanditem div.imgcntr div.watchprog div.fg { left: 0px; top: 0px; height: 3px; background-color: #2d91ff; }
+
+div.coverbanditem div.imgcntr div.title { color: #ffffff; bottom: 13px; }
+
+div.coverbanditem div.title { left: 0px; width: auto; margin-left: 10px; margin-right: 8px; font-size: 24px; line-height: 28px; color: #ffffff; }
+
+div.coverbanditem div.title.focustitle { display: none; }
+
+div.coverbanditem div.title.seasonnum { font-size: 42px; line-height: 42px; font-weight: bold; }
+
+div.coverbanditem div.title p.subtitle { margin-top: 8px; font-size: 18px; line-height: 22px; opacity: 0.78; }
+
+div.coverbanditem span.flag { font-size: 15px; padding: 1px 6px 0px 6px; margin-left: 6px; color: #1c2841; background-color: #ffffff; }
+
+div.coverbanditem.t02 div.imgcntr div.title, div.coverbanditem.t05 div.imgcntr div.title { bottom: 8px; }
+
+div.coverbanditem.t03 { width: 248px; height: 330px; }
+
+div.coverbanditem.t03.focus { width: 278px; height: 370px; margin-left: -18px; }
+
+div.coverbanditem.t08.focus div.imgcntr div.titleshade { background-position: 0px -470px; opacity: 1; }
+
+div.coverbanditem.sizel { width: 420px; height: 236px; }
+
+div.coverbanditem.sizel.t01, div.coverbanditem.sizel.t08 { height: 370px; }
+
+div.coverbanditem.sizel.t01 div.imgcntr, div.coverbanditem.sizel.t08 div.imgcntr { height: 236px; }
+
+div.coverbanditem.sizel.t01 > div.title, div.coverbanditem.sizel.t08 > div.title { top: 248px; }
+
+div.coverbanditem.sizel.focus { width: 472px; height: 265px; }
+
+div.coverbanditem.sizel.focus.t01, div.coverbanditem.sizel.focus.t08 { height: 407px; }
+
+div.coverbanditem.sizel.focus.t01 div.imgcntr, div.coverbanditem.sizel.focus.t08 div.imgcntr { height: 265px; }
+
+div.coverbanditem.sizel.focus.t01 > div.title, div.coverbanditem.sizel.focus.t08 > div.title { top: 277px; }
+
+div.coverbanditem.sizem { width: 313px; height: 176px; }
+
+div.coverbanditem.sizem.t01 div.imgcntr, div.coverbanditem.sizem.t08 div.imgcntr { height: 176px; }
+
+div.coverbanditem.sizem.t01 > div.title, div.coverbanditem.sizem.t08 > div.title { top: 188px; }
+
+div.coverbanditem.sizem.t01 { height: 310px; }
+
+div.coverbanditem.sizem.t08 { height: 282px; }
+
+div.coverbanditem.sizem.focus { width: 365px; height: 205px; }
+
+div.coverbanditem.sizem.focus.t01 div.imgcntr, div.coverbanditem.sizem.focus.t08 div.imgcntr { height: 205px; }
+
+div.coverbanditem.sizem.focus.t01 > div.title, div.coverbanditem.sizem.focus.t08 > div.title { top: 217px; }
+
+div.coverbanditem.sizem.focus.t01 { height: 348px; }
+
+div.coverbanditem.sizem.focus.t08 { height: 320px; }
+
+div.coverbanditem.sizes { width: 252px; height: 142px; }
+
+div.coverbanditem.sizes.t01, div.coverbanditem.sizes.t08 { height: 273px; }
+
+div.coverbanditem.sizes.t01 div.imgcntr, div.coverbanditem.sizes.t08 div.imgcntr { height: 142px; }
+
+div.coverbanditem.sizes.t01 > div.title, div.coverbanditem.sizes.t08 > div.title { top: 154px; }
+
+div.coverbanditem.sizes.focus { width: 306px; height: 172px; }
+
+div.coverbanditem.sizes.focus.t01, div.coverbanditem.sizes.focus.t08 { height: 312px; }
+
+div.coverbanditem.sizes.focus.t01 div.imgcntr, div.coverbanditem.sizes.focus.t08 div.imgcntr { height: 172px; }
+
+div.coverbanditem.sizes.focus.t01 > div.title, div.coverbanditem.sizes.focus.t08 > div.title { top: 184px; }
+
+div.coverbanditem.stage { width: 1165px; height: 509px; }
+
+div.coverbanditem.stage div.imgcntr p.sub { margin-top: 20px; }
+
+div.coverbanditem.stage.focus { border-width: 0px; margin-top: 0px; margin-left: 0px; }
+
+div.optbutton { top: 33px; width: 48px; height: 48px; }
+
+div.optbutton.focus { background-color: #2d91ff; }
+
+div.optbutton.pos0 { left: 154px; }
+
+div.optbutton.pos1 { left: 1168px; }
+
+div.optbutton div.smicon { left: 12px; top: 11px; }
+
+div.lrabar { left: 0px; top: 0px; width: 1280px; height: 9px; background-color: #0071ee; }
+
+div.preloadimg { left: 0px; top: 0px; width: 1px; height: 1px; background-image: url("icons.11e5c92a.png"); background-repeat: no-repeat; }
+
+div.topmenu { left: 0px; top: 0px; width: 1280px; height: 96px; text-align: center; }
+
+div.topmenu div.shadebg { left: 0px; top: 0px; width: 1280px; height: 89px; background-image: url(vshade.f91a6a11.png); }
+
+div.topmenu div.channel { left: 540px; top: 33px; width: 280px; height: 48px; text-align: center; }
+
+div.topmenu div.channel img { width: auto; height: 48px; }
+
+div.topmenu div.title { left: 195px; top: 37px; width: 980px; height: 46px; font-size: 34px; line-height: 45px; text-align: center; color: #ffffff; }
+
+div.topmenu div.searchentry { left: 260px; top: 33px; width: 840px; height: 48px; background-color: #1c2841; -webkit-border-radius: 48px; border-radius: 48px; }
+
+div.topmenu div.searchentry.focus { background-color: #2d91ff; }
+
+div.topmenu div.searchentry div.smicon { left: 12px; top: 11px; }
+
+div.topmenu div.searchentry div.searchtext { left: 48px; top: 11px; height: 30px; font-size: 20px; line-height: 25px; color: #ffffff; }
+
+div.bottombar { left: 0px; top: 618px; width: 1280px; height: 102px; background-color: #000e29; }
+
+div.showtext { left: 0px; width: 640px; padding: 10px 80px 30px 560px; color: #ffffff; font-size: 21px; line-height: 26px; }
+
+div.showtext p.title { margin: 0px 0px 10px 0px; padding: 0px; font-size: 42px; line-height: 46px; }
+
+div.showtext div.lcolumn { left: 154px; top: 71px; font-size: 18px; line-height: 20px; }
+
+div.showtext img.channellogo { position: absolute; left: 272px; top: 58px; width: auto; height: 44px; }
+
+div.keyboard { left: 0px; top: 400px; width: 1280px; height: 320px; overflow: hidden; }
+
+div.keyboard div.bground { left: 0px; top: 0px; width: 1280px; height: 320px; background-color: #1c2841; opacity: 0.95; }
+
+div.keyboard div.row { position: static; margin-left: 70px; margin-top: 15px; width: 1200px; height: 54px; }
+
+div.keyboard div.row.indent { margin-left: 118px; }
+
+div.keyboard div.key { position: relative; float: left; width: 84px; height: 42px; padding-top: 12px; margin-right: 12px; font-size: 24px; line-height: 28px; text-align: center; color: #ffffff; background-color: #000e29; -webkit-border-radius: 5px; border-radius: 5px; }
+
+div.keyboard div.key.wide { width: 180px; }
+
+div.keyboard div.key.xwide { width: 234px; }
+
+div.keyboard div.key.space { width: 510px; }
+
+div.keyboard div.key.focus { background-color: #2d91ff; }
+
+div.keyboard div.key div.lgicon { left: 20px; top: 5px; }
+
+div.keyboard div.key.wide div.lgicon { left: 68px; }
+
+div.burgerscene { left: 0px; top: 0px; width: 116px; height: 720px; overflow: hidden; }
+
+div.burgerscene.opened { width: 1280px; }
+
+div.burgerscene.opened div.shadebg { opacity: 0.8; background-color: #000e29; }
+
+div.burgerscene.closed.withkeyboard { display: none; }
+
+div.burgerscene.closed div.burgermenu { background-color: #000e29; }
+
+div.burgerscene.closed div.burgermenu div.menuopt span { display: none; }
+
+div.burgermenu { left: 0px; top: 0px; width: 360px; height: 720px; overflow: hidden; background-color: #001e50; }
+
+div.burgermenu.submenu { left: 360px; width: 320px; background-color: #003480; }
+
+div.burgermenu.submenu div.menuopt { margin-left: -22px; }
+
+div.burgermenu.submenur { left: 950px; width: 330px; background-color: #1c2841; }
+
+div.burgermenu.submenur div.menuopt { margin-left: -30px; }
+
+div.burgermenu div.scrollpane { left: 0px; width: 100%; }
+
+div.burgermenu div.menuopt { left: 0px; top: 36px; width: 250px; height: 32px; padding-top: 12px; padding-left: 110px; font-size: 20px; line-height: 25px; color: #ffffff; }
+
+div.burgermenu div.menuopt.sel { color: #2d91ff; }
+
+div.burgermenu div.menuopt.title { font-weight: bold; }
+
+div.burgermenu div.menuopt.noicon { width: 288px; padding-left: 72px; }
+
+div.burgermenu div.menuopt.focus { background-color: #2d91ff; color: #ffffff; }
+
+div.burgermenu div.menuopt div.lgicon { left: 62px; top: 0px; }
+
+div.burgermenu div.menuopt div.lgicon.iconright { left: 292px; }
+
+div.burgermenu div.menuopt div.loggedin { left: 69px; top: 7px; width: 30px; height: 30px; text-align: center; font-size: 16px; line-height: 30px; border-radius: 15px; color: #000e29; background-color: #ffffff; }
+
+div.messageelem { left: 153px; color: #ffffff; }
+
+div.messageelem.centeredmessage { width: 800px; left: 260px; text-align: center; }
+
+div.messageelem p.title { font-size: 26px; line-height: 31px; margin-bottom: 12px; }
+
+div.messageelem p.text { font-size: 20px; line-height: 24px; margin-bottom: 5px; }
+
+div.hselline { height: 60px; font-size: 18px; line-height: 28px; color: #ffffff; padding-top: 7px; white-space: nowrap; }
+
+div.hselline.noscroll { left: 80px; width: 1200px; text-align: center; }
+
+div.hselline.large { font-size: 23px; }
+
+div.hselline.large span.sel { color: #ffffff; border-style: solid; border-width: 0px 0px 2px 0px; border-color: #ffffff; }
+
+div.hselline.cnavi { height: 70px; margin-top: 10px; font-size: 23px; }
+
+div.hselline.cnavi span { margin-left: 2px; margin-right: 2px; background-color: #1c2841; }
+
+div.hselline span { padding: 9px 13px 9px 13px; }
+
+div.hselline span.disabled { opacity: 0.6; }
+
+div.hselline span.sel { font-size: 23px; color: #2d91ff; }
+
+div.hselline span.focus { background-color: #2d91ff; color: #ffffff; }
+
+div.searchfilter { left: 0px; width: 1280px; height: 64px; }
+
+div.searchfilter p.line { position: absolute; left: 255px; top: 6px; width: 849px; }
+
+div.tabbedcovers { left: 0px; width: 1280px; }
+
+div.epgsep { top: 0px; width: 2px; height: 588px; background-color: #1c2841; opacity: 0.8; }
+
+div.epgchlogo, div.epgchfg, div.epgchbg { width: 298px; height: 100px; }
+
+div.epgchfg { text-align: center; }
+
+div.epgchfg img { margin-top: 26px; width: auto; height: 50px; }
+
+div.epgchbg { left: 0px; top: 0px; background-color: #1c2841; opacity: 0.8; }
+
+div.epgrow { top: 0px; width: 298px; overflow: hidden; }
+
+div.epgrow div.epgitem { left: 0px; width: 207px; padding: 10px 6px 10px 85px; font-size: 23px; line-height: 27px; color: #ffffff; }
+
+div.epgrow div.epgitem.focus { background-color: #2d91ff; }
+
+div.epgrow div.epgitem p.subtitle { font-size: 18px; line-height: 23px; opacity: 0.78; }
+
+div.epgrow div.epgitem div.epgtime { left: 10px; top: 10px; font-size: 24px; line-height: 28px; }
+
+div.epgitemsingle { left: 154px; width: 628px; height: 116px; padding: 22px 20px 0px 400px; font-size: 24px; line-height: 28px; color: #ffffff; }
+
+div.epgitemsingle.focus { color: #ffffff; background-color: #2d91ff; }
+
+div.epgitemsingle p.subtitle { font-size: 18px; line-height: 23px; opacity: 0.78; }
+
+div.epgitemsingle div.epgtime { left: 295px; top: 16px; font-size: 30px; line-height: 36px; }
+
+div.epgitemsingle img { position: absolute; left: 0px; top: 0px; width: auto; height: 138px; }
+
+div.textcontainer { left: 265px; top: 0px; width: 830px; height: 720px; }
+
+div.textcontainer.widetext { left: 100px; width: 1080px; }
+
+div.textcontainer.widetext div.textinner { width: 1000px; }
+
+div.textinner { left: 40px; top: 0px; width: 750px; font-size: 18px; line-height: 25px; color: #ffffff; }
+
+div.textinner h1 { font-size: 38px; line-height: 46px; margin-top: 10px; margin-bottom: 10px; text-align: center; }
+
+div.textinner h1.pageTitle { text-align: center; }
+
+div.textinner h2 { font-size: 30px; line-height: 36px; margin-top: 20px; }
+
+div.textinner h3 { font-size: 24px; line-height: 28px; margin-top: 20px; }
+
+div.textinner p { margin-top: 5px; margin-bottom: 5px; }
+
+div.textinner img.qrcode1 { vertical-align: middle; width: 100px; height: 100px; margin-right: 10px; }
+
+div.textinner img.qrcode1.xl { width: 450px; height: 450px; }
+
+div.textinner img.qrcode2 { float: right; width: 230px; height: 230px; margin-left: 30px; }
+
+div.textinner span.textbutton { padding: 10px 20px; }
+
+div.textinner span.textbutton.focus { background-color: #2d91ff; }
+
+div.textinner div { position: relative; }
+
+div.textinner div.optionblock { margin-top: 10px; margin-bottom: 30px; border-style: solid; border-width: 0px 0px 1px 0px; border-color: #1c2841; }
+
+div.textinner div.option { width: 740px; height: 41px; padding: 19px 0px 0px 10px; line-height: 21px; border-style: solid; border-width: 1px 0px 0px 0px; border-color: #1c2841; }
+
+div.textinner div.option.twoline { padding-top: 9px; height: 52px; }
+
+div.textinner div.option.focus { background-color: #2d91ff; }
+
+div.textinner div.option div.switch { position: absolute; left: 680px; top: 15px; width: 54px; height: 30px; }
+
+div.textinner div.option div.switch .switchbg { position: absolute; left: 0px; top: 0px; width: 54px; height: 30px; border-radius: 15px; background-color: #ffffff; opacity: 0.4; }
+
+div.textinner div.option div.switch .switchfg { position: absolute; left: 3px; top: 3px; width: 24px; height: 24px; border-radius: 15px; background-color: #ffffff; }
+
+div.textinner div.option div.switch.on .switchbg { background-color: #1b6ccc; opacity: 1; }
+
+div.textinner div.option div.switch.on .switchfg { left: 27px; }
+
+div.scrollcontainer { left: 1147px; top: 100px; width: 5px; height: 600px; }
+
+div.scrollinner { left: 0px; top: 0px; width: 5px; background-color: #ffffff; -webkit-border-radius: 4px; border-radius: 4px; }
+
+div.playerloading { position: absolute; left: 640px; top: 360px; width: 100px; height: 100px; margin-left: -50px; margin-top: -50px; display: none; }
+
+div.playerloading > div.circle { position: absolute; height: 100px; width: 100px; border-radius: 50px; background-color: #2d91ff; }
+
+div.playerloading > div.alttxt { position: absolute; left: 10px; top: 37px; width: 90px; font-size: 20px; line-height: 24px; color: #ffffff; text-align: center; }
+
+img.playerbgimg { position: absolute; left: 0px; top: 0px; width: 1280px; height: 720px; border: 0px; margin: 0px; padding: 0px; }
+
+div.playerscene { left: 0px; top: 0px; width: 1280px; height: 720px; overflow: hidden; font-family: Thesis, Tiresias, sans-serif; }
+
+div.playerscene div { position: absolute; }
+
+div.playerscene img { border: 0px; margin: 0px; padding: 0px; }
+
+div.playerscene div.playerbgtop { left: 0px; top: 0px; width: 1280px; height: 142px; background-image: url(playershade.fbca3fa7.png); background-position: 0px -1px; }
+
+div.playerscene div.playerbgbottom { left: 0px; top: 480px; width: 1280px; height: 306px; background-image: url(playershade.fbca3fa7.png); background-position: 0px -145px; }
+
+div.playerscene div.playerbgshade { left: 0px; top: 0px; width: 1280px; height: 720px; opacity: 0.5; background-color: #000000; }
+
+div.playerscene div.playermaintop { left: 0px; top: 0px; width: 1280px; height: 150px; }
+
+div.playerscene div.playericon { width: 48px; height: 48px; background-image: url(playericons.d8dcdc46.png); }
+
+div.playerscene div.playericon.back { background-position: 0px    0px; }
+
+div.playerscene div.playericon.clos { background-position: -50px    0px; }
+
+div.playerscene div.playericon.menu { background-position: -100px    0px; }
+
+div.playerscene div.playericon.fail { background-position: -150px    0px; }
+
+div.playerscene div.playericon.like { background-position: -200px    0px; }
+
+div.playerscene div.playericon.likd { background-position: -250px    0px; }
+
+div.playerscene div.playericon.play { background-position: 0px  -50px; }
+
+div.playerscene div.playericon.paus { background-position: -50px  -50px; }
+
+div.playerscene div.playericon.rwnd { background-position: -100px  -50px; }
+
+div.playerscene div.playericon.ffwd { background-position: -150px  -50px; }
+
+div.playerscene div.playericon.prev { background-position: -200px  -50px; }
+
+div.playerscene div.playericon.next { background-position: -250px  -50px; }
+
+div.playerscene div.playericon.tend { background-position: -300px  -50px; }
+
+div.playerscene div.playericon.info { background-position: 0px -100px; }
+
+div.playerscene div.playericon.lang { background-position: -50px -100px; }
+
+div.playerscene div.playericon.reco { background-position: -100px -100px; }
+
+div.playerscene div.playericon.plus { background-position: -150px -100px; }
+
+div.playerscene div.playericon.minu { background-position: -200px -100px; }
+
+div.playerscene div.playericon.sett { background-position: -250px -100px; }
+
+div.playerscene div.playericon.rstr { background-position: -300px -100px; }
+
+div.playerscene div.playerbutton { width: 78px; height: 78px; }
+
+div.playerscene div.playerbutton.focus { background-color: #2d91ff; }
+
+div.playerscene div.playerbutton.focus div.playertooltip { display: block; }
+
+div.playerscene div.playerbutton.topleft { left: 64px; top: 36px; }
+
+div.playerscene div.playerbutton.topright { left: 1138px; top: 36px; }
+
+div.playerscene div.playerbutton.center { left: 616px; top: 262px; }
+
+div.playerscene div.playerbutton.notavail { display: none; }
+
+div.playerscene div.playerbutton div.playericon { left: 15px; top: 15px; }
+
+div.playerscene div.playerbutton div.playertooltip { left: -50px; top: -55px; width: 178px; height: 32px; display: none; padding-top: 12px; font-size: 18px; color: #ffffff; text-align: center; }
+
+div.playerscene div.playerbutton div.playertooltip span { padding: 11px 20px; background-color: #001e50; border-radius: 2px; }
+
+div.playerscene div.playerbutton div.playericonlabel { left: 38px; top: 21px; font-size: 10px; line-height: 12px; padding: 2px 4px; color: #ffffff; background-color: #9e9e9e; }
+
+div.playerscene div.playerbutton div.playericonlabel.active { background-color: #2d91ff; }
+
+div.playerscene div.playerbuttonrow { left: 64px; top: 44px; width: 1152px; height: 78px; font-size: 1px; line-height: 1px; }
+
+div.playerscene div.playerbuttonrow div.playerbutton { top: 0px; }
+
+div.playerscene span.actionbutton { padding: 20px 45px 20px 45px; font-size: 20px; line-height: 25px; color: #ffffff; border-style: solid; border-width: 2px; border-radius: 36px; border-color: #ffffff; margin: 0px 10px 0px 10px; }
+
+div.playerscene span.actionbutton.focus { background-color: #2d91ff; border-color: #2d91ff; }
+
+div.playerscene span.actionbutton.selected { background-color: #ffffff; color: #001e50; }
+
+div.playerscene div.playermsg { left: 300px; top: 280px; width: 620px; padding: 20px 30px; color: #ffffff; font-size: 20px; line-height: 24px; text-align: center; background-color: #001e50; }
+
+div.playerscene.playererror div.message { left: 136px; top: 270px; width: 1008px; font-size: 24px; line-height: 34px; text-align: center; color: #ffffff; }
+
+div.playerscene.playererror div.message.withactions { margin-top: -50px; }
+
+div.playerscene.playererror div.message p { padding-bottom: 27px; }
+
+div.playerscene.playererror div.message p.lgspac { padding-bottom: 60px; }
+
+div.playerscene.playererror div.message p span.age { font-size: 34px; padding: 22px 25px 21px 25px; background-color: #ffffff; color: #000000; font-weight: bold; }
+
+div.playerscene.playererror div.pinentry { margin-left: 358px; top: 270px; width: 60px; height: 90px; }
+
+div.playerscene.playererror div.pinentry.focus div.up { left: 19px; top: 0px; width: 22px; height: 12px; background-image: url(playericons.d8dcdc46.png); background-position: -325px 0px; }
+
+div.playerscene.playererror div.pinentry.focus div.dn { left: 19px; top: 76px; width: 22px; height: 14px; background-image: url(playericons.d8dcdc46.png); background-position: -325px -15px; }
+
+div.playerscene.playererror div.pinentry div.digit { left: 0px; top: 15px; width: 56px; height: 50px; padding-top: 6px; border-style: solid; border-width: 2px; border-color: #ffffff; color: #ffffff; font-size: 36px; line-height: 45px; text-align: center; }
+
+div.playerscene.playererror div.pinentry div.digit.star { font-size: 80px; padding-top: 22px; height: 34px; }
+
+div.playerscene.playererror div.pinentry.focus div.digit { background-color: #2d91ff; border-color: #2d91ff; }
+
+div.playerscene div.vidtitle { left: 154px; top: 43px; width: 900px; font-size: 30px; line-height: 36px; color: #ffffff; }
+
+div.playerscene div.vidtitle p.subtitle { margin-top: 3px; font-size: 20px; line-height: 24px; opacity: 0.8; }
+
+div.playerscene div.bottomctrls { left: 0px; top: 568px; width: 1280px; height: 124px; }
+
+div.playerscene div.bottomctrls.withreco { top: 476px; }
+
+div.playerscene div.bottomctrls.withactions { margin-top: -72px; }
+
+div.playerscene div.bottomctrls.live > div.progbar > div.progcntnr { left: 38px; width: 1029px; }
+
+div.playerscene div.bottomctrls.live > div.progbar > div.progcntnr div.pbar.fg { background-color: #fd4f5c; }
+
+div.playerscene div.bottomctrls div.playeractionrow { left: 54px; top: 160px; height: 50px; white-space: nowrap; }
+
+div.playerscene div.progbar { left: 50px; top: 10px; width: 1180px; height: 25px; }
+
+div.playerscene div.progbar div.progtxt { top: 0px; width: 110px; height: 25px; font-size: 20px; line-height: 24px; text-align: center; color: #ffffff; }
+
+div.playerscene div.progbar div.progtxt.played { left: 0px; }
+
+div.playerscene div.progbar div.progtxt.remain { left: 1070px; }
+
+div.playerscene div.progbar div.progcntnr { left: 113px; top: 10px; width: 954px; height: 4px; }
+
+div.playerscene div.progbar div.progcntnr div.pbar { left: 0px; top: 0px; width: 100%; height: 4px; }
+
+div.playerscene div.progbar div.progcntnr div.pbar.bg { background-color: #ffffff; opacity: 0.5; }
+
+div.playerscene div.progbar div.progcntnr div.pbar.fg { background-color: #2d91ff; }
+
+div.playerscene div.progbar div.timepoint { top: -4px; width: 12px; height: 12px; margin-left: -6px; background-color: #ffffff; -webkit-border-radius: 12px; border-radius: 12px; }
+
+div.playerscene div.progbar div.timepoint.focus { margin-left: -12px; margin-top: -6px; border-style: solid; border-width: 6px; border-color: #2d91ff; }
+
+div.playerscene div.progbar div.timepointbubble { bottom: 28px; width: 220px; margin-left: -114px; border-style: solid; border-width: 4px; border-color: #2d91ff; background-color: #001e50; color: #ffffff; }
+
+div.playerscene div.progbar div.timepointbubble img { position: relative; width: 220px; height: 123px; }
+
+div.playerscene div.progbar div.timepointbubble p.textonly { font-size: 20px; line-height: 24px; padding: 40px 6px 18px 8px; text-align: center; }
+
+div.playerscene div.progbar div.timepointbubble p.title { font-size: 20px; line-height: 24px; padding: 6px 6px 2px 8px; }
+
+div.playerscene div.progbar div.timepointbubble p.subtitle { font-size: 18px; line-height: 22px; padding: 0px 6px 4px 8px; opacity: 0.8; }
+
+div.playerscene div.progbar div.timepointbubble p.timetext { font-size: 20px; line-height: 24px; padding: 6px 8px 6px 8px; text-align: center; }
+
+div.playerscene div.recos { overflow: hidden; left: 0px; top: 632px; width: 1280px; height: 88px; opacity: 0.8; }
+
+div.playerscene div.recos div.itemlist { left: -25px; top: 0px; }
+
+div.playerscene div.popuppane { left: 0px; bottom: 0px; width: 1280px; height: 554px; overflow: hidden; background-color: #001e50; color: #ffffff; }
+
+div.playerscene div.popuppane.hidden { opacity: 0; }
+
+div.playerscene div.popuppane div.popuptitle { left: 64px; top: 40px; width: 1000px; font-size: 28px; line-height: 34px; }
+
+div.playerscene div.popuppane div.autoplay { left: 64px; top: 90px; width: 600px; height: 30px; font-size: 20px; line-height: 24px; color: #ffffff; }
+
+div.playerscene div.popuppane div.autoplay span { color: #2d91ff; }
+
+div.playerscene div.popuppane div.playerbutton { left: 1138px; top: 17px; }
+
+div.playerscene div.popuppane div.scrollareaouter { left: 160px; top: 100px; width: 860px; height: 390px; overflow: hidden; }
+
+div.playerscene div.popuppane div.scrollareainner { left: 0px; width: 850px; }
+
+div.playerscene div.popuppane div.scrollareainner p.title { font-size: 30px; line-height: 36px; margin-bottom: 14px; }
+
+div.playerscene div.popuppane div.scrollareainner p.subtitle { font-size: 18px; line-height: 22px; margin-bottom: 14px; color: #ccd2dc; }
+
+div.playerscene div.popuppane div.scrollareainner p.subtitle span.flag { color: #ffffff; background-color: #334b73; font-size: 14px; padding: 3px 8px 2px 8px; margin-left: 8px; }
+
+div.playerscene div.popuppane div.scrollareainner p.subtitle span.flag.remaindays { margin-left: 0px; background-color: #2d91ff; }
+
+div.playerscene div.popuppane div.scrollareainner p.text { font-size: 20px; line-height: 24px; padding-top: 4px; margin-bottom: 14px; }
+
+div.playerscene div.popuppane div.scrollareabar { left: 1173px; top: 120px; width: 8px; height: 350px; }
+
+div.playerscene div.popuppane div.scrollareabar div.bar { left: 0px; top: 0px; width: 8px; height: 100%; background-color: #4d6285; border-radius: 8px; }
+
+div.playerscene div.popuppane div.scrollareabar.focus div.bar { background-color: #2d91ff; }
+
+div.playerscene div.popuppane div.scrollareabar div.bar.bg { opacity: 0.1; }
+
+div.playerscene div.popuppane div.settingscontainer { left: 124px; top: 118px; width: 1156px; }
+
+div.playerscene div.popuppane div.settingsrow { position: relative; width: 1156px; height: 38px; padding-top: 9px; font-size: 20px; line-height: 24px; margin-bottom: 14px; color: #ffffff; }
+
+div.playerscene div.popuppane div.settingsrow div.options { left: 270px; top: 9px; width: 880px; height: 47px; }
+
+div.playerscene div.popuppane div.settingsrow div.option { position: relative; display: inline; padding: 10px 17px; }
+
+div.playerscene div.popuppane div.settingsrow div.option.focus { background-color: #2d91ff; }
+
+div.playerscene div.popuppane div.settingsrow div.option.inactive span { opacity: 0.6; }
+
+div.playerscene div.popuppane div.settingsrow div.option.selected span { border-style: solid; border-width: 0px 0px 3px 0px; border-color: #2d91ff; }
+
+div.playerscene div.popuppane div.itemlist { top: 138px; }
+
+div.playerscene div.buttonhint { overflow: hidden; left: 930px; top: 32px; width: 290px; height: 86px; border-radius: 10px; }
+
+div.playerscene div.buttonhint div.bg { left: 0px; top: 0px; width: 290px; height: 86px; background-color: #1c2841; opacity: 0.8; }
+
+div.playerscene div.buttonhint div.colbtn { left: 25px; top: 25px; width: 36px; height: 36px; background-color: #3a96dd; border-radius: 18px; }
+
+div.playerscene div.buttonhint div.texthead { left: 84px; top: 21px; font-size: 18px; line-height: 20px; color: #ffffff; }
+
+div.playerscene div.buttonhint div.texthint { left: 84px; top: 45px; font-size: 22px; line-height: 25px; color: #ffffff; }
+
+div.playerscene div.coverbanditem { background-color: #001e50; }
+
+div.playerscene div.coverbanditem.focus { background-color: #1c2841; }
