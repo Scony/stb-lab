@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  </head>
+  <body bgcolor="#ff9900">
+    <canvas width="640" height="360" id="canvas1" style="width: 640px; height: 360px; transform: translateZ(0px); zoom: 2; position: relative; top: 0px; left: 0px;"></canvas>
+    <canvas width="1280" height="720" id="canvas2" style="position: absolute; left: 0px; top: 0px; z-index: 1; transform-origin: 0% 0%; perspective: 1000px; zoom: 1;" class="pixelated"></canvas>
+    <canvas width="245" height="107" id="canvas3" style="position: absolute; z-index: 2; left: 1025px; top: 16px;"></canvas>
+    <img id="source"
+       src="https://mdn.mozillademos.org/files/5397/rhino.jpg"
+       width="300" height="227"  style="position:relative;left:100px;">
+    <script>
+      $(document).ready(function() {
+          const image = $("#source")[0];
+          var ctx1 = $("#canvas1")[0].getContext("2d");
+          ctx1.drawImage(image, 0, 0);
+          var ctx2 = $("#canvas2")[0].getContext("2d");
+          ctx2.drawImage(image, 100, 100);
+          var ctx3 = $("#canvas3")[0].getContext("2d");
+          ctx3.drawImage(image, 0, 0);
+      });
+    </script>
+  </body>
+</html>
