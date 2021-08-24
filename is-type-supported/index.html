@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  </head>
+  <body bgcolor="#ff9900">
+    <br><br><br>
+    <ul>
+      <li>audio/mp4; codecs="mp4a.40.2"; channels="-1"</li>
+      <li>audio/mp4; codecs="mp4a.40.2"; channels="-1"; features="INVALID"</li>
+      <li>audio/mp4; codecs="mp4a.40.2"; features="INVALID"</li>
+      <li>audio/mp4; codecs="mp4a.40.2"; channels="2"; features="INVALID"</li>
+      <li>audio/mp4; codecs="mp4a.40.2"; channels="16"</li>
+    </ul>
+  </body>
+  <script>
+    $(function() {
+        $("li").each(function() {
+            console.log($(this));
+            var type = $(this).text()
+            var outcome = MediaSource.isTypeSupported(type);
+            var strOutcome = String(outcome).toUpperCase();
+            $(this).html(type + ' <b>[' + strOutcome + ']</b>');
+        });
+    });
+  </script>
+</html>
