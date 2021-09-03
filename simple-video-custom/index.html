@@ -33,13 +33,15 @@
       $(document).ready(function() {
           var video_src = findGetParameter("video_src");
           var video_type = findGetParameter("video_type");
+          var seek_target = findGetParameter("seek_target");
+          seek_target = seek_target == null ? 4.0 : seek_target;
           if (video_src != null && video_type != null) {
               window.setTimeout(function() {
                   video_src = b64_to_utf8(video_src);
                   $("source")[0].src = video_src;
                   $("source")[0].type = video_type;
                   $("video")[0].load();
-                  $("video")[0].currentTime = 4.0;
+                  $("video")[0].currentTime = seek_target;
                   $("video")[0].play();
               }, 2000);
           }
