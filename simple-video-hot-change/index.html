@@ -4,11 +4,20 @@
   </head>
   <body bgcolor="#ff9900">
     <br><br><br>
-    <div style="position:relative;left:100px">
-      <video controls="" width="480" controls>
-        <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
-        Sorry, your browser doesn't support embedded videos.
-      </video>
+    <div style="position:relative;left:10px">
+      <table>
+        <tr>
+          <td valign="top">
+            <p>currentTime = ?</p>
+            <video controls="" width="480" controls>
+              <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">
+                Sorry, your browser doesn't support embedded videos.
+            </video>
+          </td>
+          <td id="log" style="font-size:10px">
+          </td>
+        </tr>
+      </table>
     </div>
     <script>
       function findGetParameter(parameterName) {
@@ -28,33 +37,52 @@
           return decodeURIComponent(escape(window.atob( str )));
       }
 
+      var video = $("video")[0];
+      var source = $("source")[0];
+
       function change_video_after_3s(_) {
-          if ($("video")[0].currentTime >= 3.0) {
-              console.log('change')
-              $("video")[0].removeEventListener('timeupdate', change_video_after_3s);
+          if (video.currentTime >= 3.0) {
+              video.removeEventListener('timeupdate', change_video_after_3s);
               var video_src = findGetParameter("video_src");
               var video_type = findGetParameter("video_type");
               var seek_target = findGetParameter("seek_target");
               seek_target = seek_target == null ? 4.0 : seek_target;
               if (video_src != null && video_type != null) {
                   video_src = b64_to_utf8(video_src);
-                  $("source")[0].src = video_src;
-                  $("source")[0].type = video_type;
-                  $("video")[0].addEventListener('loadeddata', function(_) {
-                      $("video")[0].currentTime = seek_target;
-                      $("video")[0].play();
+                  $("#log").html($("#log").html() + "changing video to " + video_src + "<br>");
+                  source.src = video_src;
+                  video.addEventListener('loadedmetadata', function(_) {
+                      video.addEventListener('seeked', function(_) {
+                          video.play();
+                          $("#log").html($("#log").html() + "video.play()<br>");
+                      }, {once:true});
+                      video.currentTime = seek_target;
+                      $("#log").html($("#log").html() + "video.currentTime=" + seek_target +"<br>");
                   }, {once:true});
-                  $("video")[0].load();
+                  video.load();
+                  $("#log").html($("#log").html() + "video.load()<br>");
               }
           }
       }
 
       $(document).ready(function() {
-          $("video")[0].addEventListener('loadeddata', function(_) {
-              $("video")[0].play();
+          video.addEventListener('loadeddata', function(_) {
+              video.play();
           }, {once:true});
-          $("video")[0].addEventListener('timeupdate', change_video_after_3s);
-          $("video")[0].load();
+          video.addEventListener('timeupdate', change_video_after_3s);
+
+          video.addEventListener('timeupdate', function(_) {
+              $("p").text("currentTime = " + video.currentTime);
+              $("#log").html($("#log").html() + video.currentTime + "<br>");
+          });
+          video.addEventListener('seeking', function(e) {
+              $("#log").html($("#log").html() + "seeking to " + e.target.currentTime + "<br>");
+          });
+          video.addEventListener('seeked', function(e) {
+              $("#log").html($("#log").html() + "seeked to " + e.target.currentTime + "<br>");
+          });
+
+          video.load();
       });
     </script>
   </body>
