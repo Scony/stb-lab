@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <style>
+      @keyframes a-animation {
+          from {
+              bottom: 25px;
+              opacity: 0;
+          }
+          to {
+              bottom: 97px;
+              opacity: 1;
+          }
+      }
+
+      @keyframes b-animation {
+          from {
+              bottom: 97px;
+              opacity: 1;
+          }
+          to {
+              bottom: 25px;
+              opacity: 0;
+          }
+      }
+
+      .text-a-animation {
+          animation-name: a-animation;
+          animation-duration:.2s;
+          animation-timing-function:ease-out;
+      }
+
+      .text-b-animation {
+          animation-name: b-animation;
+          animation-duration:.2s;
+          animation-timing-function:ease-out;
+      }
+    </style>
+  </head>
+  <body bgcolor="#ff9900">
+    <br><br><br>
+    <div style="position:relative;left:10px">
+      <video controls="" width="800" controls loop>
+        <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">
+          Sorry, your browser doesn't support embedded videos.
+      </video>
+      <!-- <div style="position:absolute;left:0px;top:0px;width:800px;height:450px;background-color: red;opacity:50%;"> -->
+        <div style="position:absolute;left:0px;top:0px;width:800px;height:400px;">
+        <div id="text_a" style="color: white;text-align:center;position:absolute;bottom:97px;width:800px;" class="text-a-animation">
+          <h1>Hello World!</h1>
+          This is text_a.
+        </div>
+        <div id="text_b" style="color: white;text-align:center;position:absolute;bottom:97px;width:800px;opacity:0;" class="text-b-animation">
+          <h1>World Hello!</h1>
+          This is text_b.
+        </div>
+      </div>
+      </div>
+      <script>
+        var video = $("video")[0];
+        var source = $("source")[0];
+
+        $(document).ready(function() {
+            video.addEventListener('loadeddata', function(_) {
+                video.play();
+            }, {once:true});
+            video.load();
+            setInterval(function() {
+                var a = $("#text_a")[0];
+                var b = $("#text_b")[0];
+                a.classList.remove("text-a-animation");
+                b.classList.remove("text-b-animation");
+                void a.offsetWidth;
+                void b.offsetWidth;
+                a.classList.add("text-a-animation");
+                b.classList.add("text-b-animation");
+            }, 3000);
+        });
+      </script>
+  </body>
+</html>
