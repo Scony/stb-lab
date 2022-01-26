@@ -8,37 +8,31 @@
     <div style="position:relative;left:100px">
       <video id="video" width="480" controls></video>
       <br>
-      <button id="mediaSrc">(1) Setup MediaSource</button>
-      <button id="srcBuffer">(2) Add & fill SourceBuffer</button>
-      <button id="play">(3) Play</button>
-      <button id="seek">(4) Seek near end</button>
-      <button id="replay">(5) Replay</button>
+      <button id="run">Run scenario</button>
     </div>
     <script>
       var video = $("#video")[0];
-      var assetURL = 'https://nickdesaulniers.github.io/netfix/demo/frag_bunny.mp4'
+      var assetURL = 'https://scony.github.io/stb-lab/mse-video-restart/flower.mp4';
       var mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
       var mediaSource = null;
 
-      $("#mediaSrc").click(function() {
-          setupMediaSource();
-      });
-      $("#srcBuffer").click(function() {
-          setupAndFillSourceBuffer();
-      });
-      $("#play").click(function() {
-          startPlaying();
-      });
-      $("#seek").click(function() {
-          seekNearEnd();
-      });
-      $("#replay").click(function() {
-          replay();
+      $("#run").click(function() {
+          setup();
+          video.addEventListener('canplay', function(_) {
+              console.log('(3) playing...');
+              video.play();
+          }, {once:true});
+          video.addEventListener('ended', function(_) {
+              console.log('(4) ended, restarting...');
+              video.play();
+          }, {once:true});
       });
 
-      function setupMediaSource() {
+      function setup() {
+          console.log('(1) setting up MediaSource...');
           if ('MediaSource' in window && MediaSource.isTypeSupported(mimeCodec)) {
               mediaSource = new MediaSource;
+              mediaSource.addEventListener('sourceopen', onSourceOpen, {once:true});
               console.log(mediaSource.readyState, '(should be "closed")');
               video.src = URL.createObjectURL(mediaSource);
           } else {
@@ -46,29 +40,18 @@
           }
       }
 
-      function setupAndFillSourceBuffer() {
+      function onSourceOpen() {
+          console.log('(2) setting up SourceBuffer...');
           console.log(mediaSource.readyState, '(should be "open")');
           var sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
           fetchAB(assetURL, function (buf) {
+              sourceBuffer.addEventListener('updateend', function (_) {
+                  mediaSource.endOfStream();
+                  console.log(mediaSource.readyState, '(should be "ended")');
+              });
               console.log(buf);
               sourceBuffer.appendBuffer(buf);
           });
-      }
-
-      function startPlaying() {
-          video.addEventListener('waiting', function(_) {
-              mediaSource.endOfStream();
-              console.log('marked EOS');
-          }, {once:true});
-          video.play();
-      }
-
-      function seekNearEnd() {
-          video.currentTime = 55.0;
-      }
-
-      function replay() {
-          video.play();
       }
 
       function fetchAB(url, cb) {
