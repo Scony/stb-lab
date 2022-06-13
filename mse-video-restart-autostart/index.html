@@ -1,0 +1,84 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  </head>
+  <body bgcolor="#ff9900">
+    <br><br><br>
+    <div style="position:relative;left:10px">
+      <table>
+        <tr>
+          <td valign="top">
+            <p>currentTime = ?</p>
+            <video width="480" controls>
+                Sorry, your browser doesn't support embedded videos.
+            </video>
+          </td>
+          <td id="log" style="font-size:10px">
+          </td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      var video = $("video")[0];
+      var source = video;
+
+      $(document).ready(function() {
+          setTimeout(function() {
+              var mediaSource = new MediaSource;
+              $("#log").html($("#log").html() + "media source created: " + mediaSource.readyState + "<br>");
+              source.src = URL.createObjectURL(mediaSource);
+              $("#log").html($("#log").html() + "media source attached: " + mediaSource.readyState + "<br>");
+              mediaSource.addEventListener('sourceopen', function(_) {
+                  var mediaSource = this;
+                  $("#log").html($("#log").html() + "media source 'sourceopen', readyState: " + mediaSource.readyState + "<br>");
+                  var mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
+                  $("#log").html($("#log").html() + "media source: " + mimeCodec + " supported: " + MediaSource.isTypeSupported(mimeCodec) + "<br>");
+                  var sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
+                  $("#log").html($("#log").html() + "media source added source buffer, readyState: " + mediaSource.readyState + "<br>");
+                  sourceBuffer.addEventListener('updateend', function (_) {
+                      $("#log").html($("#log").html() + "media source 'updateend', readyState: " + mediaSource.readyState + "<br>");
+                      mediaSource.endOfStream();
+                  });
+                  $("#log").html($("#log").html() + "fetching asset...<br>");
+                  fetchAB(
+                      'https://scony.github.io/stb-lab/mse-video-restart-autostart/frag_bunny.mp4',
+                      function(buf) {
+                          $("#log").html($("#log").html() + "fetching asset done (" + buf.byteLength + " bytes)<br>");
+                          sourceBuffer.appendBuffer(buf);
+                      }
+                  );
+              });
+          }, 3000);
+
+          setTimeout(function() {
+              video.play();
+              $("#log").html($("#log").html() + "video.play()<br>");
+          }, 6000);
+
+          video.addEventListener('timeupdate', function(_) {
+              $("p").text("currentTime = " + video.currentTime);
+              //$("#log").html($("#log").html() + video.currentTime + "<br>");
+          });
+
+          video.addEventListener('ended', function(_) {
+              $("#log").html($("#log").html() + "restarting in 3s<br>");
+              setTimeout(function() {
+                  video.play();
+                  $("#log").html($("#log").html() + "restarting: video.play()<br>");
+              }, 3000);
+          });
+      });
+
+      function fetchAB(url, cb) {
+          console.log(url);
+          var xhr = new XMLHttpRequest;
+          xhr.open('get', url);
+          xhr.responseType = 'arraybuffer';
+          xhr.onload = function () {
+              cb(xhr.response);
+          };
+          xhr.send();
+      }
+    </script>
+  </body>
+</html>
