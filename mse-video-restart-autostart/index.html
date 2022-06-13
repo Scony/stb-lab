@@ -37,7 +37,7 @@
                   $("#log").html($("#log").html() + "media source added source buffer, readyState: " + mediaSource.readyState + "<br>");
                   sourceBuffer.addEventListener('updateend', function (_) {
                       $("#log").html($("#log").html() + "media source 'updateend', readyState: " + mediaSource.readyState + "<br>");
-                      mediaSource.endOfStream();
+                      //mediaSource.endOfStream();
                   });
                   $("#log").html($("#log").html() + "fetching asset...<br>");
                   fetchAB(
@@ -47,13 +47,17 @@
                           sourceBuffer.appendBuffer(buf);
                       }
                   );
+                  setTimeout(function() {
+                      mediaSource.endOfStream();
+                      $("#log").html($("#log").html() + "mediaSource.endOfStream()<br>");
+                  }, 5000);
               });
           }, 3000);
 
           setTimeout(function() {
               video.play();
               $("#log").html($("#log").html() + "video.play()<br>");
-          }, 6000);
+          }, 10000);
 
           video.addEventListener('timeupdate', function(_) {
               $("p").text("currentTime = " + video.currentTime);
