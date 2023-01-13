@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  </head>
+  <body bgcolor="#ff9900">
+    <br><br><br>
+    <div style="position:relative;left:100px">
+      <button>Make some noise</button>
+    </div>
+    <script>
+      $("button").click(function() {
+          makeNoise(5.0);
+      });
+
+      $().ready(function() {
+          makeNoise(5.0);
+      });
+
+      var audioContext;
+
+      const AudioContextAPI = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextAPI) {
+          console.log("Webaudio not supported!");
+      } else {
+          audioContext = new AudioContextAPI();
+      }
+
+      function makeNoise(durationSeconds, gain = 0.2) {
+          if (!audioContext) {
+              return;
+          }
+
+          let channels = 2;
+          let duration = 2.0;
+          if (!isNaN(durationSeconds)) {
+              duration = durationSeconds;
+          }
+          console.log("Generating noise with duration: " + duration + "[sec]");
+
+          const frameCount = audioContext.sampleRate * duration;
+          var buffer = audioContext.createBuffer(channels, frameCount, audioContext.sampleRate);
+          for (let channel = 0; channel < channels; channel++) {
+              const nowBuffering = buffer.getChannelData(channel);
+              for (let i = 0; i < frameCount; i++) {
+                  nowBuffering[i] = Math.random() - 0.5;
+              }
+          }
+          var source = audioContext.createBufferSource();
+          source.buffer = buffer;
+          var gainNode = audioContext.createGain();
+          source.connect(gainNode);
+          gainNode.connect(audioContext.destination);
+          if (isNaN(gain)) {
+              gain = 0.2;
+          }
+          console.log("Setting gain: " + gain);
+          gainNode.gain.value = gain;
+
+          source.start();
+          source.onended = () => {
+              console.log("White noise finished.");
+          };
+      }
+    </script>
+  </body>
+</html>
