@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  </head>
+  <body bgcolor="#ff9900">
+    <br><br><br>
+    <div style="position:relative;left:100px">
+      <button>Synthesize some speech</button><br>
+      <hr>
+      <p id="log"></p>
+      <hr>
+    </div>
+    <script>
+      $("button").click(function() {
+          synthesizeSpeech();
+      });
+
+      $().ready(function() {
+          synthesizeSpeech();
+      });
+
+      function synthesizeSpeech() {
+          if (!window.speechSynthesis) {
+              console.log("Browser doesn't support speech synthesis");
+              $("#log").html($("#log").html() + "Browser doesn't support speech synthesis<br>");
+              return;
+          } else {
+              console.log("Browser supports speech synthesis");
+              $("#log").html($("#log").html() + "Browser supports speech synthesis<br>");
+          }
+
+          var sp = new SpeechSynthesisUtterance("speech synthesis. ".repeat(9999));
+          sp.onstart = function(event) {
+              console.log("Speech synthesis started");
+              $("#log").html($("#log").html() + "Speech synthesis started<br>");
+          }
+          sp.onerror = function(event) {
+              console.log("Speech synthesis error: " + event.error);
+              $("#log").html($("#log").html() + "Speech synthesis error: " + event.error + "<br>");
+          };
+          sp.onend = function(event) {
+              console.log("Speech synthesis finished");
+              $("#log").html($("#log").html() + "Speech synthesis finished<br>");
+          }
+
+          window.speechSynthesis.speak(sp);
+      }
+    </script>
+  </body>
+</html>
