@@ -41,10 +41,8 @@ function removeFromSBAndPlay() {
     return;
   }
   log("Samples removal start <br>");
-  sourceBufferVid.remove(10, 9999999);
+  sourceBufferVid.remove(1, 9999999);
   log("SourceBuffer.remove() called");
-  log("calling video.play()...");
-  video.play();
 }
 
 function setupMSE() {
@@ -83,7 +81,11 @@ function setupMSE() {
               log("No blinking means WebProcess hang <br>");
 
               sourceBufferVid.onupdatestart = () => { log("Samples removal started <br>"); };
-              sourceBufferVid.onupdateend = () => { log("Samples removal finished !!! -> TEST OK <br>"); };
+              sourceBufferVid.onupdateend = () => {
+                log("Samples removal finished !!! -> TEST OK <br>");
+                log("calling video.play()...");
+                video.play();
+              };
 
               setInterval(()=>{
                 color_idx = (color_idx + 1) % colors.length;
