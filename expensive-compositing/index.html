@@ -44,7 +44,7 @@
 
       .ring {
         margin: 0 auto;
-        height: 110px;
+        height: 550px;
         width: 600px;
         -webkit-transform-style: preserve-3d;
         -webkit-animation-iteration-count: infinite;
@@ -162,6 +162,14 @@
 
       // call init once the document is fully loaded
       window.addEventListener('load', init, false);
+
+      var counter = 0;
+      setInterval(function() {
+          var elements = document.getElementsByClassName("poster");
+          var element = elements[counter++ % elements.length];
+          element.style.width = '1000px';
+          element.style.height = '1000px';
+      }, 1000);
 
     </script>
   </head>
