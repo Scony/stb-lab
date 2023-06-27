@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <style>
+      @keyframes banner_animation {
+          from { height: 420px; }
+          to { height: 720px; }
+      }
+
+      @keyframes diagnostic_overlay_animation {
+          0% { opacity: 0.2; }
+          50% { opacity: 0.8; }
+          100% { opacity: 0.2; }
+      }
+
+      #diagnostic_overlay {
+          width: 100%;
+          height: 100px;
+          background: black;
+          position:absolute;
+          animation-name: diagnostic_overlay_animation;
+          animation-duration: 2s;
+      }
+
+      #banner {
+          background: red;
+          width: 100%;
+          height: 720px;
+          animation-name: banner_animation;
+          animation-duration: 2s;
+      }
+
+      #banner_content {
+          width: 100%;
+          height: 100%;
+          background: radial-gradient(circle, rgba(0,0,0,1) 1%, rgba(9,9,121,1) 25%, rgba(0,212,255,1) 100%);
+          -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0)), to(rgba(0,0,0,1)));
+      }
+    </style>
+  </head>
+  <body bgcolor="#ff9900">
+    <div id="diagnostic_overlay"></div>
+    <div id="banner">
+      <div id="banner_content"></div>
+    </div>
+  </body>
+</html>
