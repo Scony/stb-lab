@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script>
+      $(document).ready(function() {
+          console.log("Querying geolocation...");
+          navigator.permissions.query({ name: "geolocation" }).then((result) => {
+              console.log("geolocation query result: " + result + " " + result.name + " " + result.state + " " + result.status);
+          });
+      });
+    </script>
+  </head>
+  <body bgcolor="#ff9900">
+  </body>
+</html>
