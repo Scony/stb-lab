@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title>MSE audio demo</title>
+  </head>
+  <body bgColor="#ff9900">
+    <br><br><br>
+    <div style="position:relative;left:10px">
+      <table>
+        <tr>
+          <td valign="top">
+            <p>currentTime = ?</p>
+            <audio width="480" controls>
+                Sorry, your browser doesn't support embedded videos.
+            </audio>
+          </td>
+          <td id="log" style="font-size:10px">
+          </td>
+        </tr>
+      </table>
+      <br>
+      <button id="run">Run scenario</button>
+    </div>
+    <script>
+      var audio = document.getElementsByTagName('audio')[0];
+      var mediaSource = null;
+      var sourceBuffer = null;
+
+      const mimeCodec = 'audio/mp4';
+      // for local testing in FF, set "security.fileuri.strict_origin_policy" to "false" in about:config
+      const assetUrl = '../assets/frag_bunny.mp4';
+
+      document.getElementById("run").addEventListener('click', runScenario);
+
+      function log(message) {
+          console.log(message);
+          document.getElementById('log').innerHTML = document.getElementById('log').innerHTML + message + "<br>";
+      }
+
+      function runScenario() {
+          log("scenario started");
+
+          // MediaSource setup
+          mediaSource = new MediaSource;
+          log("MediaSource created, readyState: " + mediaSource.readyState);
+          audio.src = URL.createObjectURL(mediaSource);
+          log("MediaSource attached, readyState: " + mediaSource.readyState);
+
+          // SourceBuffer setup
+          mediaSource.addEventListener('sourceopen', function(_) {
+              log("handling MediaSource 'sourceopen', readyState: " + mediaSource.readyState);
+              log("MediaSource: '" + mimeCodec + "' supported? " + MediaSource.isTypeSupported(mimeCodec));
+              sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
+              log("MediaSource added SourceBuffer, readyState: " + mediaSource.readyState);
+
+              fetchAB(assetUrl, function(buf) {
+                  log("fetching '" + assetUrl + "' done - received buffer of size: " + buf.byteLength + " bytes ");
+                  log("appending data to SourceBuffer...")
+                  sourceBuffer.appendBuffer(buf);
+
+                  sourceBuffer.onupdatestart = () => {
+                       log("received SourceBuffer 'updatestart'");
+                   }
+
+                  sourceBuffer.onupdateend = () => {
+                      log("handling SourceBuffer 'updateend', buffered ranges: " + sourceBuffer.buffered.length);
+                      for (var i = 0; i < sourceBuffer.buffered.length; i++) {
+                          log("buffered range #" + i + ": [" + sourceBuffer.buffered.start(i) + ", " + sourceBuffer.buffered.end(i) + "]");
+                      }
+
+                      log("marking MediaSource EOS");
+                      mediaSource.endOfStream();
+
+                      log("playing...");
+                      audio.play();
+                  }
+              });
+          });
+      }
+
+      function fetchAB(url, cb) {
+          log("fetching '" + url + "' using XHR...");
+          var xhr = new XMLHttpRequest;
+          xhr.open('get', url);
+          xhr.responseType = 'arraybuffer';
+          xhr.onload = function () {
+              cb(xhr.response);
+          };
+          xhr.send();
+      }
+    </script>
+  </body>
+</html>
