@@ -25,11 +25,17 @@
       var mediaSource = null;
       var sourceBuffer = null;
 
-      const mimeCodec = 'audio/mp4';
-      // for local testing in FF, set "security.fileuri.strict_origin_policy" to "false" in about:config
-      const assetUrl = '../assets/frag_bunny.mp4';
+      var mimeCodec = 'audio/mpeg';
+      var assetUrl = '../assets/big_buck_bunny_full_hd_60fps_60s.aac';
+
+      mimeCodec = findGetParameter("mime") != null ? findGetParameter("mime") : mimeCodec;
+      assetUrl = findGetParameter("asset") != null ? findGetParameter("asset") : assetUrl;
 
       document.getElementById("run").addEventListener('click', runScenario);
+
+      if (findGetParameter("autostart") != null && findGetParameter("autostart") == "1") {
+          runScenario();
+      }
 
       function log(message) {
           console.log(message);
@@ -58,8 +64,8 @@
                   sourceBuffer.appendBuffer(buf);
 
                   sourceBuffer.onupdatestart = () => {
-                       log("received SourceBuffer 'updatestart'");
-                   }
+                      log("received SourceBuffer 'updatestart'");
+                  }
 
                   sourceBuffer.onupdateend = () => {
                       log("handling SourceBuffer 'updateend', buffered ranges: " + sourceBuffer.buffered.length);
@@ -86,6 +92,19 @@
               cb(xhr.response);
           };
           xhr.send();
+      }
+
+      function findGetParameter(parameterName) {
+          var result = null,
+              tmp = [];
+          location.search
+              .substr(1)
+              .split("&")
+              .forEach(function (item) {
+                  tmp = item.split("=");
+                  if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+              });
+          return result;
       }
     </script>
   </body>
