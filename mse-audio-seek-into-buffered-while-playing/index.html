@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>MSE audio demo</title>
+    <title>MSE audio demo - seek into buffered position while playing</title>
   </head>
   <body bgColor="#ff9900">
     <br><br><br>
@@ -8,7 +8,7 @@
       <table>
         <tr>
           <td valign="top">
-            <p>currentTime = ?</p>
+            <p id="currentTime">currentTime = ?</p>
             <audio width="480" controls>
                 Sorry, your browser doesn't support embedded videos.
             </audio>
@@ -70,6 +70,7 @@
 
                   sourceBuffer.onupdatestart = () => {
                       log("received SourceBuffer 'updatestart'");
+                      sourceBuffer.onupdatestart = null;
                   }
 
                   sourceBuffer.onupdateend = () => {
@@ -83,9 +84,23 @@
 
                       log("playing...");
                       audio.play();
+                      audio.ontimeupdate = () => {
+                          if (audio.currentTime > 5.0) {
+                              log("seeking 10s forward...");
+                              audio.volume = 0.0;
+                              audio.onseeked = () => {
+                                  log("seeked to " + audio.currentTime);
+                                  audio.volume = 1.0;
+                              }
+                              audio.currentTime += 10.0;
+                              audio.ontimeupdate = null;
+                          }
+                      }
+                      sourceBuffer.onupdateend = null;
+                      sourceBuffer.remove(50.0, 9999999);
                   }
               });
-          });
+          }, {once:true});
       }
 
       function fetchAB(url, cb) {
