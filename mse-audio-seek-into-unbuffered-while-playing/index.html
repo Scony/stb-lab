@@ -71,7 +71,7 @@
           log("fetching '" + assetUrl + "' done - received buffer of size: " + data.byteLength + " bytes");
           log("appending data to SourceBuffer up to 10.0...");
           sourceBuffer.appendWindowEnd = 10.0;
-          sourceBuffer.appendBuffer(data);
+          sourceBuffer.appendBuffer(data.slice(0, data.byteLength/5));
           sourceBuffer.onupdatestart = () => {
               log("received SourceBuffer 'updatestart' event");
               sourceBuffer.onupdatestart = null;
@@ -79,8 +79,6 @@
           log("waiting for SourceBuffer 'updateend' event...");
           await new Promise((resolve) => { sourceBuffer.onupdateend = () => { resolve(); } });
           logStats();
-          // mediaSource.endOfStream();
-          // log("marked MediaSource EOS, readyState: " + mediaSource.readyState);
 
           // seek forward after playing for a while
           log("playing...");
@@ -94,8 +92,7 @@
           log("got 'waiting' event, adding missing data...");
           sourceBuffer.appendWindowEnd = 25.0;
           sourceBuffer.appendWindowStart = 11.0;
-          sourceBuffer.appendBuffer(data);
-          //sourceBuffer.appendBuffer(data.slice(data.byteLength/3-));
+          sourceBuffer.appendBuffer(data.slice(data.byteLength/5));
           await new Promise((resolve) => { audio.onseeked = () => { resolve(); } });
           log("seeked to " + audio.currentTime);
           audio.volume = 1.0;

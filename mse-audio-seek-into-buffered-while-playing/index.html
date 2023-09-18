@@ -79,8 +79,6 @@
           log("waiting for SourceBuffer 'updateend' event...");
           await new Promise((resolve) => { sourceBuffer.onupdateend = () => { resolve(); } });
           logStats();
-          // mediaSource.endOfStream();
-          // log("marked MediaSource EOS, readyState: " + mediaSource.readyState);
 
           // seek forward after playing for a while
           log("playing...");
