@@ -1,0 +1,143 @@
+<html>
+  <head>
+    <title>MSE audio demo - seek into unbuffered position while playing</title>
+  </head>
+  <body bgColor="#ff9900">
+    <br><br><br>
+    <div style="position:relative;left:10px">
+      <table>
+        <tr>
+          <td valign="top">
+            <p id="currentTime">currentTime = ?</p>
+            <audio width="480" controls>
+                Sorry, your browser doesn't support embedded videos.
+            </audio>
+          </td>
+          <td id="log" style="font-size:10px">
+          </td>
+        </tr>
+      </table>
+      <br>
+      <button id="run">Run scenario</button>
+    </div>
+    <script>
+      var audio = document.getElementsByTagName('audio')[0];
+      var mediaSource = null;
+      var sourceBuffer = null;
+
+      var mimeCodec = 'audio/mpeg';
+      // for local testing in FF, set "security.fileuri.strict_origin_policy" to "false" in about:config
+      var assetUrl = '../assets/big_buck_bunny_full_hd_60fps_60s.aac';
+      const mediaSourceDuration = 60.0;
+
+      mimeCodec = findGetParameter("mime") != null ? findGetParameter("mime") : mimeCodec;
+      assetUrl = findGetParameter("asset") != null ? findGetParameter("asset") : assetUrl;
+
+      document.getElementById("run").addEventListener('click', runScenario);
+
+      if (findGetParameter("autostart") != null && findGetParameter("autostart") == "1") {
+          runScenario();
+      }
+
+      audio.addEventListener("timeupdate", () => {
+          document.getElementById("currentTime").innerHTML = "currentTime = " + audio.currentTime;
+      });
+
+      function log(message) {
+          console.log(message);
+          document.getElementById('log').innerHTML = document.getElementById('log').innerHTML + message + "<br>";
+      }
+
+      async function runScenario() {
+          log("scenario started");
+
+          // MediaSource setup
+          mediaSource = new MediaSource;
+          log("MediaSource created, readyState: " + mediaSource.readyState);
+          audio.src = URL.createObjectURL(mediaSource);
+          log("MediaSource attached, readyState: " + mediaSource.readyState);
+          log("waiting for MediaSource 'sourceopen' event...");
+          await new Promise((resolve) => { mediaSource.onsourceopen = () => { resolve(); } });
+          log("MediaSource readyState: " + mediaSource.readyState);
+          mediaSource.duration = mediaSourceDuration;
+          log("MediaSource duration was set manually to: " + mediaSourceDuration + ", and it's " + mediaSource.duration + " now");
+
+          // SourceBuffer setup
+          log("MediaSource, '" + mimeCodec + "' supported: " + MediaSource.isTypeSupported(mimeCodec));
+          sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
+          log("MediaSource added SourceBuffer, readyState: " + mediaSource.readyState);
+          log("waiting for asset data...");
+          var data = await fetchAB(assetUrl);
+          log("fetching '" + assetUrl + "' done - received buffer of size: " + data.byteLength + " bytes");
+          log("appending data to SourceBuffer up to 10.0...");
+          sourceBuffer.appendWindowEnd = 10.0;
+          sourceBuffer.appendBuffer(data);
+          sourceBuffer.onupdatestart = () => {
+              log("received SourceBuffer 'updatestart' event");
+              sourceBuffer.onupdatestart = null;
+          }
+          log("waiting for SourceBuffer 'updateend' event...");
+          await new Promise((resolve) => { sourceBuffer.onupdateend = () => { resolve(); } });
+          logStats();
+          // mediaSource.endOfStream();
+          // log("marked MediaSource EOS, readyState: " + mediaSource.readyState);
+
+          // seek forward after playing for a while
+          log("playing...");
+          audio.play();
+          await new Promise((resolve) => { audio.ontimeupdate = () => { if (audio.currentTime > 5.0) { resolve(); } } });
+          log("seeking 10s forward...");
+          audio.volume = 0.0;
+          audio.currentTime += 10.0;
+          log("waiting for MediaElement 'waiting' event...");
+          await new Promise((resolve) => { audio.onwaiting = () => { resolve(); } });
+          log("got 'waiting' event, adding missing data...");
+          sourceBuffer.appendWindowEnd = 25.0;
+          sourceBuffer.appendWindowStart = 11.0;
+          sourceBuffer.appendBuffer(data);
+          //sourceBuffer.appendBuffer(data.slice(data.byteLength/3-));
+          await new Promise((resolve) => { audio.onseeked = () => { resolve(); } });
+          log("seeked to " + audio.currentTime);
+          audio.volume = 1.0;
+          logStats();
+
+          log("scenario finished");
+      }
+
+      function logStats() {
+          var msg = "MediaSource duration: " + mediaSource.duration + ", SourceBuffer ranges: " + sourceBuffer.buffered.length + " (";
+          for (var i = 0; i < sourceBuffer.buffered.length; i++) {
+              msg += "#" + i + ": [" + sourceBuffer.buffered.start(i) + ", " + sourceBuffer.buffered.end(i) + "], ";
+          }
+          msg += ")";
+          log(msg);
+      }
+
+      async function fetchAB(url) {
+          return new Promise((resolve) => {
+              log("fetching '" + url + "' using XHR...");
+              var xhr = new XMLHttpRequest;
+              xhr.open('get', url);
+              xhr.responseType = 'arraybuffer';
+              xhr.onload = function () {
+                  resolve(xhr.response);
+              };
+              xhr.send();
+          });
+      }
+
+      function findGetParameter(parameterName) {
+          var result = null,
+              tmp = [];
+          location.search
+              .substr(1)
+              .split("&")
+              .forEach(function (item) {
+                  tmp = item.split("=");
+                  if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+              });
+          return result;
+      }
+    </script>
+  </body>
+</html>
