@@ -48,7 +48,7 @@
           document.getElementById('log').innerHTML = document.getElementById('log').innerHTML + message + "<br>";
       }
 
-      function runScenario() {
+      async function runScenario() {
           log("scenario started");
 
           // MediaSource setup
@@ -56,65 +56,66 @@
           log("MediaSource created, readyState: " + mediaSource.readyState);
           audio.src = URL.createObjectURL(mediaSource);
           log("MediaSource attached, readyState: " + mediaSource.readyState);
+          log("waiting for MediaSource 'sourceopen' event...");
+          await new Promise((resolve) => { mediaSource.onsourceopen = () => { resolve(); } });
+          log("MediaSource readyState: " + mediaSource.readyState);
+          mediaSource.duration = mediaSourceDuration;
+          log("MediaSource duration was set manually to: " + mediaSourceDuration + ", and it's " + mediaSource.duration + " now");
 
           // SourceBuffer setup
-          mediaSource.addEventListener('sourceopen', function(_) {
-              log("handling MediaSource 'sourceopen', readyState: " + mediaSource.readyState);
-              mediaSource.duration = mediaSourceDuration;
-              log("MediaSource duration was set manually to: " + mediaSourceDuration + ", and it's " + mediaSource.duration + " now");
-              log("MediaSource: '" + mimeCodec + "' supported? " + MediaSource.isTypeSupported(mimeCodec));
-              sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
-              log("MediaSource added SourceBuffer, readyState: " + mediaSource.readyState);
+          log("MediaSource, '" + mimeCodec + "' supported: " + MediaSource.isTypeSupported(mimeCodec));
+          sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
+          log("MediaSource added SourceBuffer, readyState: " + mediaSource.readyState);
+          log("waiting for asset data...");
+          var data = await fetchAB(assetUrl);
+          log("fetching '" + assetUrl + "' done - received buffer of size: " + data.byteLength + " bytes");
+          log("appending data to SourceBuffer up to 50.0...");
+          sourceBuffer.appendWindowEnd = 50.0;
+          sourceBuffer.appendBuffer(data);
+          sourceBuffer.onupdatestart = () => {
+              log("received SourceBuffer 'updatestart' event");
+              sourceBuffer.onupdatestart = null;
+          }
+          log("waiting for SourceBuffer 'updateend' event...");
+          await new Promise((resolve) => { sourceBuffer.onupdateend = () => { resolve(); } });
+          logStats();
+          // mediaSource.endOfStream();
+          // log("marked MediaSource EOS, readyState: " + mediaSource.readyState);
 
-              fetchAB(assetUrl, function(buf) {
-                  log("fetching '" + assetUrl + "' done - received buffer of size: " + buf.byteLength + " bytes ");
-                  log("appending data to SourceBuffer up to 50.0...");
-                  sourceBuffer.appendWindowEnd = 50.0;
-                  sourceBuffer.appendBuffer(buf);
+          // seek forward after playing for a while
+          log("playing...");
+          audio.play();
+          await new Promise((resolve) => { audio.ontimeupdate = () => { if (audio.currentTime > 5.0) { resolve(); } } });
+          log("seeking 10s forward...");
+          audio.volume = 0.0;
+          audio.currentTime += 10.0;
+          await new Promise((resolve) => { audio.onseeked = () => { resolve(); } });
+          log("seeked to " + audio.currentTime);
+          audio.volume = 1.0;
 
-                  sourceBuffer.onupdatestart = () => {
-                      log("received SourceBuffer 'updatestart'");
-                      sourceBuffer.onupdatestart = null;
-                  }
-
-                  sourceBuffer.onupdateend = () => {
-                      log("handling SourceBuffer 'updateend', buffered ranges: " + sourceBuffer.buffered.length + ", MediaSource duration: " + mediaSource.duration);
-                      for (var i = 0; i < sourceBuffer.buffered.length; i++) {
-                          log("buffered range #" + i + ": [" + sourceBuffer.buffered.start(i) + ", " + sourceBuffer.buffered.end(i) + "]");
-                      }
-
-                      log("marking MediaSource EOS");
-                      mediaSource.endOfStream();
-
-                      log("playing...");
-                      audio.play();
-                      audio.ontimeupdate = () => {
-                          if (audio.currentTime > 5.0) {
-                              log("seeking 10s forward...");
-                              audio.volume = 0.0;
-                              audio.onseeked = () => {
-                                  log("seeked to " + audio.currentTime);
-                                  audio.volume = 1.0;
-                              }
-                              audio.currentTime += 10.0;
-                              audio.ontimeupdate = null;
-                          }
-                      }
-                      sourceBuffer.onupdateend = null;
-                  }
-              });
-          }, {once:true});
+          log("scenario finished");
       }
 
-      function fetchAB(url, cb) {
-          log("fetching '" + url + "' using XHR...");
-          var xhr = new XMLHttpRequest;
-          xhr.open('get', url);
-          xhr.responseType = 'arraybuffer';
-          xhr.onload = function () {
-              cb(xhr.response);
-          };
-          xhr.send();
+      function logStats() {
+          var msg = "MediaSource duration: " + mediaSource.duration + ", SourceBuffer ranges: " + sourceBuffer.buffered.length + " (";
+          for (var i = 0; i < sourceBuffer.buffered.length; i++) {
+              msg += "#" + i + ": [" + sourceBuffer.buffered.start(i) + ", " + sourceBuffer.buffered.end(i) + "], ";
+          }
+          msg += ")";
+          log(msg);
+      }
+
+      async function fetchAB(url) {
+          return new Promise((resolve) => {
+              log("fetching '" + url + "' using XHR...");
+              var xhr = new XMLHttpRequest;
+              xhr.open('get', url);
+              xhr.responseType = 'arraybuffer';
+              xhr.onload = function () {
+                  resolve(xhr.response);
+              };
+              xhr.send();
+          });
       }
 
       function findGetParameter(parameterName) {
