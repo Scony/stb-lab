@@ -28,6 +28,7 @@
       var mimeCodec = 'audio/mpeg';
       // for local testing in FF, set "security.fileuri.strict_origin_policy" to "false" in about:config
       var assetUrl = '../assets/big_buck_bunny_full_hd_60fps_60s.aac';
+      const mediaSourceDuration = 60.0;
 
       mimeCodec = findGetParameter("mime") != null ? findGetParameter("mime") : mimeCodec;
       assetUrl = findGetParameter("asset") != null ? findGetParameter("asset") : assetUrl;
@@ -59,13 +60,16 @@
           // SourceBuffer setup
           mediaSource.addEventListener('sourceopen', function(_) {
               log("handling MediaSource 'sourceopen', readyState: " + mediaSource.readyState);
+              mediaSource.duration = mediaSourceDuration;
+              log("MediaSource duration was set manually to: " + mediaSourceDuration + ", and it's " + mediaSource.duration + " now");
               log("MediaSource: '" + mimeCodec + "' supported? " + MediaSource.isTypeSupported(mimeCodec));
               sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
               log("MediaSource added SourceBuffer, readyState: " + mediaSource.readyState);
 
               fetchAB(assetUrl, function(buf) {
                   log("fetching '" + assetUrl + "' done - received buffer of size: " + buf.byteLength + " bytes ");
-                  log("appending data to SourceBuffer...")
+                  log("appending data to SourceBuffer up to 50.0...");
+                  sourceBuffer.appendWindowEnd = 50.0;
                   sourceBuffer.appendBuffer(buf);
 
                   sourceBuffer.onupdatestart = () => {
@@ -74,7 +78,7 @@
                   }
 
                   sourceBuffer.onupdateend = () => {
-                      log("handling SourceBuffer 'updateend', buffered ranges: " + sourceBuffer.buffered.length);
+                      log("handling SourceBuffer 'updateend', buffered ranges: " + sourceBuffer.buffered.length + ", MediaSource duration: " + mediaSource.duration);
                       for (var i = 0; i < sourceBuffer.buffered.length; i++) {
                           log("buffered range #" + i + ": [" + sourceBuffer.buffered.start(i) + ", " + sourceBuffer.buffered.end(i) + "]");
                       }
@@ -97,7 +101,6 @@
                           }
                       }
                       sourceBuffer.onupdateend = null;
-                      sourceBuffer.remove(50.0, 9999999);
                   }
               });
           }, {once:true});
