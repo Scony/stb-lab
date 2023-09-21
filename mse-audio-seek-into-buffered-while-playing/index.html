@@ -84,11 +84,11 @@
           log("playing...");
           audio.play();
           await new Promise((resolve) => { audio.ontimeupdate = () => { if (audio.currentTime > 5.0) { resolve(); } } });
-          log("seeking 10s forward...");
+          log("seeking to 15s...");
           audio.volume = 0.0;
-          audio.currentTime += 10.0;
+          audio.currentTime = 15.0;
           await new Promise((resolve) => { audio.onseeked = () => { resolve(); } });
-          log("seeked to " + audio.currentTime);
+          log("seeked to " + audio.currentTime + "s");
           audio.volume = 1.0;
 
           log("scenario finished");
